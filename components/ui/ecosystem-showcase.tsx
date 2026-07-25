@@ -2,6 +2,13 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 // Types
 type CardId = "claude" | "cursor" | "windsurf" | "http";
@@ -116,6 +123,36 @@ export function EcosystemShowcase() {
     setActiveCard(activeCard === id ? null : id);
   };
 
+  useGSAP(() => {
+    const stats = gsap.utils.toArray<HTMLElement>("[data-count]");
+    if (stats.length > 0) {
+      stats.forEach((el) => {
+        const target = Number(el.getAttribute("data-count") ?? "0");
+        const suffix = el.getAttribute("data-count-suffix") ?? "";
+        const prefix = el.getAttribute("data-count-prefix") ?? "";
+        const divider = el.getAttribute("data-count-divider") ?? "";
+        const counter = { val: 0 };
+
+        gsap.to(counter, {
+          val: target,
+          duration: 1.4,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 95%",
+            once: true,
+          },
+          onUpdate: () => {
+            const current = Math.round(counter.val);
+            el.textContent = divider
+              ? `${current}${divider}${suffix}`
+              : `${prefix}${current}${suffix}`;
+          },
+        });
+      });
+    }
+  }, { scope: containerRef });
+
   return (
     <LayoutGroup id="ecosystem-layout-group">
       <div 
@@ -174,7 +211,7 @@ export function EcosystemShowcase() {
                     opacity: { duration: 0.3 },
                     scale: { duration: 0.35, ease: "easeOut" },
                   }}
-                  className={`relative p-5 rounded-2xl cursor-pointer select-none transition-all duration-300 border flex items-center justify-between gap-4 shadow-sm h-24 ${
+                  className={`relative p-5 rounded-2xl cursor-pointer select-none transition-all duration-300 border flex items-center justify-between gap-4 shadow-sm h-24 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-green ${
                     isSelected
                       ? "bg-primary text-on-primary border-accent-green shadow-[0_0_25px_rgba(46,92,68,0.35)] z-20"
                       : "bg-white dark:bg-surface-container-low border-outline-variant/20 dark:border-outline-variant/10 hover:border-accent-green/40 hover:shadow-[0_0_15px_rgba(46,92,68,0.1)] text-text-main"

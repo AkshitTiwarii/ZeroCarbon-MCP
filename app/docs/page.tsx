@@ -5,6 +5,7 @@ import { DocsSidebar, DocCategory } from "@/components/ui/docs-sidebar";
 import { DocsContent } from "@/components/ui/docs-content";
 import { DocsOutline, OutlineItem } from "@/components/ui/docs-outline";
 import NotchNavbar from "@/components/ui/notch-navbar";
+import { useLenis } from "lenis/react";
 
 const CATEGORIES: DocCategory[] = [
   {
@@ -81,6 +82,8 @@ export default function DocsPage() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [copiedTextId, setCopiedTextId] = useState<string | null>(null);
 
+  const lenis = useLenis();
+
   // Robust scrollspy implementation using relative viewport coordinates to handle short sections perfectly
   useEffect(() => {
     const handleScroll = () => {
@@ -127,16 +130,24 @@ export default function DocsPage() {
     setActiveSectionId(id);
     const el = document.getElementById(id);
     if (el) {
-      const offset = 90; // Header offset
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+      if (lenis) {
+        lenis.scrollTo(el, {
+          offset: -90,
+          duration: 1.2,
+          easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        const offset = 90; // Header offset
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
     }
   };
 

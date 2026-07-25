@@ -545,7 +545,9 @@ export default function HeroInteractiveFlow({ containerHeight }: { containerHeig
             >
               {/* Premium Heading */}
               <div className="flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-accent-green/5 border border-accent-green/10 self-start">
-                <span className="text-[12px] text-accent-green">✨</span>
+                <svg className="w-3.5 h-3.5 text-accent-green fill-current animate-pulse shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 0c.5 4 2 5.5 6 6-4 .5-5.5 2-6 6-.5-4-2-5.5-6-6 4-.5 5.5-2 6-6zm11 8.5c.3 2.3 1.2 3.2 3.5 3.5-2.3.3-3.2 1.2-3.5 3.5-.3-2.3-1.2-3.2-3.5-3.5 2.3-.3 3.2-1.2 3.5-3.5zm-3-5.5c.2 1.3.7 1.8 2 2-1.3.2-1.8.7-2 2-.2-1.3-.7-1.8-2-2 1.3-.2 1.8-.7 2-2z" />
+                </svg>
                 <span className="text-[10px] sm:text-[11px] font-bold text-accent-green tracking-wider uppercase">
                   Ask your carbon agent anything
                 </span>

@@ -41,7 +41,7 @@ export function FaqAccordion({
               className={`w-full relative transition-all duration-300 ease-in border-b border-outline-variant/10 last:border-b-0`}
             >
               <button
-                className={`flex flex-row items-center justify-start w-full min-h-[60px] py-5 relative m-0 px-6 pl-14 cursor-pointer border-0 border-l-[6px] transition-all duration-300 text-left outline-none text-base md:text-lg font-body-md ${
+                className={`flex flex-row items-center justify-start w-full min-h-[60px] py-5 relative m-0 px-6 pl-14 cursor-pointer border-0 border-l-[6px] transition-all duration-300 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset text-base md:text-lg font-body-md ${
                   isActive 
                     ? "border-l-primary bg-surface-mint/40 text-primary font-bold" 
                     : "border-l-accent-green/20 bg-transparent text-text-main hover:border-l-accent-green hover:text-primary hover:bg-surface-mint/10"
