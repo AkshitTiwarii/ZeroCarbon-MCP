@@ -24,7 +24,7 @@ const NavLink = ({
     onClick={(e) => onClick(e, href)}
     className="group flex items-center gap-2 text-[13px] font-bold font-body-md tracking-wide text-white hover:text-emerald-300 transition-colors whitespace-nowrap cursor-pointer"
   >
-    <Icon className="w-4 h-4 opacity-95 group-hover:opacity-100 transition-opacity shrink-0" />
+    <Icon className="w-4 h-4 text-white group-hover:text-emerald-300 transition-colors shrink-0" />
     <span>{label}</span>
   </Link>
 );
@@ -105,7 +105,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
              <div className="relative w-full h-full flex items-center justify-between px-2 md:px-4">
                
                {/* Desktop Left Nav */}
-               <nav className="hidden md:flex gap-6 shrink-0">
+               <nav className="hidden md:flex gap-6 items-center shrink-0">
                 {items.left.map(item => (
                   <NavLink key={item.label} {...item} onClick={handleScroll} />
                 ))}
@@ -125,11 +125,11 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
               <div className="flex justify-center shrink-0 mx-4">
                 <Link href="/" className="flex items-center gap-2 group">
                   {/* Clean SVG Leaf Logo */}
-                  <svg className="w-5 h-5 text-accent-green hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="w-5 h-5 text-accent-green hover:rotate-12 transition-transform shrink-0" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M17 2H21V6C21 13 14 20 6 20H2V16C2 8 9 2 17 2Z" />
                     <path d="M12 2A10 10 0 0 0 2 12A10 10 0 0 0 12 22A10 10 0 0 0 22 12A10 10 0 0 0 12 2M12 4A8 8 0 0 1 20 12A8 8 0 0 1 12 20A8 8 0 0 1 4 12A8 8 0 0 1 12 4Z" opacity="0.3" />
                   </svg>
-                  <span className="font-body-md text-[13px] sm:text-[15px] font-bold text-white tracking-wide">ZeroCarbon MCP</span>
+                  <span className="font-display-sm text-sm font-bold text-white tracking-wide">ZeroCarbon MCP</span>
                 </Link>
               </div>
 

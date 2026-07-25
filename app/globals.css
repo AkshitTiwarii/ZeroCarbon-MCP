@@ -905,7 +905,7 @@ body {
 
 
 .material-symbols-outlined {
-  font-family: 'Material Symbols Outlined', sans-serif;
+  font-family: 'Material Symbols Outlined' !important;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
@@ -936,3 +936,34 @@ body {
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* ZeroCarbon Documentation Premium Typography Matching System */
+.docs-page-container {
+  font-family: var(--font-hanken-grotesk), sans-serif !important;
+}
+
+.docs-sidebar a:not(.material-symbols-outlined),
+.docs-sidebar button:not(.material-symbols-outlined),
+.docs-outline a:not(.material-symbols-outlined),
+.docs-outline h5 {
+  font-family: var(--font-hanken-grotesk), sans-serif !important;
+}
+
+.docs-content h1,
+.docs-content h2,
+.docs-content h3,
+.docs-content h4 {
+  font-family: var(--font-newsreader), serif !important;
+}
+
+.docs-content p,
+.docs-content li,
+.docs-content td,
+.docs-content th,
+.docs-content code:not(.font-mono),
+.docs-content span:not(.font-mono):not(.material-symbols-outlined),
+.docs-content strong,
+.docs-content a:not(.material-symbols-outlined) {
+  font-family: var(--font-hanken-grotesk), sans-serif !important;
+}
+

@@ -19,6 +19,7 @@ export interface DocsSidebarProps {
   onSelect: (id: string) => void;
   isOpen: boolean;
   onClose: () => void;
+  onSearchClick?: () => void;
 }
 
 export function DocsSidebar({
@@ -27,8 +28,8 @@ export function DocsSidebar({
   onSelect,
   isOpen,
   onClose,
+  onSearchClick,
 }: DocsSidebarProps) {
-  const [searchQuery, setSearchQuery] = useState("");
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>(() => {
     // Expand all by default
@@ -45,19 +46,6 @@ export function DocsSidebar({
       [title]: !prev[title],
     }));
   };
-
-  // Filter categories and links based on search
-  const filteredCategories = categories
-    .map((category) => {
-      const filteredItems = category.items.filter((item) =>
-        item.label.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      return {
-        ...category,
-        items: filteredItems,
-      };
-    })
-    .filter((category) => category.items.length > 0);
 
   return (
     <>
@@ -76,36 +64,33 @@ export function DocsSidebar({
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 w-72 border-r border-neutral-200/50 dark:border-outline-variant/10 bg-white dark:bg-background pt-24 px-6 flex flex-col transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-40 w-72 border-r border-neutral-200/50 dark:border-outline-variant/10 bg-white dark:bg-background pt-24 px-6 flex flex-col transition-transform duration-300 md:translate-x-0 docs-sidebar ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Search Input */}
-        <div className="mb-6 relative">
+        {/* Search Input Triggering Command Palette */}
+        <div 
+          onClick={onSearchClick}
+          className="mb-6 relative cursor-pointer group select-none"
+        >
           <input
             type="text"
-            placeholder="Search docs..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-9 py-2 text-xs rounded-xl bg-neutral-50 dark:bg-surface-container-low border border-neutral-200 dark:border-outline-variant/15 text-neutral-800 dark:text-text-main focus:outline-none focus:border-accent-green dark:focus:border-accent-green focus:ring-2 focus:ring-accent-green/5 transition-all"
+            placeholder="Search docs... (Ctrl+K)"
+            readOnly
+            className="w-full px-9.5 py-2.5 text-xs rounded-xl bg-neutral-50/50 dark:bg-surface-container-low/30 backdrop-blur-sm border border-neutral-200/80 dark:border-outline-variant/15 text-neutral-500 dark:text-text-muted focus:outline-none cursor-pointer group-hover:border-accent-green/40 dark:group-hover:border-accent-green/30 group-hover:bg-white dark:group-hover:bg-surface-container-low/50 group-hover:shadow-[0_4px_16px_rgba(46,92,68,0.04)] transition-all duration-300 font-medium"
           />
-          <span className="material-symbols-outlined absolute left-3 top-2.5 text-neutral-400 text-[16px] pointer-events-none">
+          <span className="material-symbols-outlined absolute left-3 top-3 text-neutral-400 dark:text-text-muted/70 text-[17px] pointer-events-none group-hover:text-accent-green transition-colors duration-300">
             search
           </span>
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-2.5 text-neutral-400 dark:text-text-muted hover:text-neutral-600 dark:hover:text-text-main cursor-pointer"
-            >
-              <span className="material-symbols-outlined text-[14px]">close</span>
-            </button>
-          )}
+          <kbd className="absolute right-3 top-2.5 px-1.5 py-0.5 text-[9px] font-sans font-bold text-neutral-400 dark:text-text-muted/70 bg-neutral-100/80 dark:bg-neutral-800/85 rounded-md border border-neutral-200 dark:border-outline-variant/10 pointer-events-none flex items-center gap-0.5 group-hover:border-accent-green/30 group-hover:text-accent-green transition-all duration-300">
+            <span>Ctrl</span><span>K</span>
+          </kbd>
         </div>
 
         {/* Categories List */}
-        <div className="flex-1 overflow-y-auto pr-1 pb-8 space-y-5 select-none scrollbar-thin">
-          {filteredCategories.length > 0 ? (
-            filteredCategories.map((category) => {
+        <div className="flex-1 overflow-y-auto pr-1 pb-8 space-y-5 select-none scrollbar-none">
+          {categories.length > 0 ? (
+            categories.map((category) => {
               const isExpanded = expandedCategories[category.title] ?? true;
 
               return (
@@ -185,7 +170,7 @@ export function DocsSidebar({
           ) : (
             <div className="text-center py-8">
               <p className="text-xs text-text-muted leading-relaxed">
-                No matching topics found.
+                No topics found.
               </p>
             </div>
           )}
@@ -194,3 +179,5 @@ export function DocsSidebar({
     </>
   );
 }
+
+export default DocsSidebar;

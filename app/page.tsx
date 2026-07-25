@@ -831,14 +831,14 @@ export default function Home() {
 
         {/* Final CTA */}
         <section id="contact" className="px-4 sm:px-grid-margin min-h-[100dvh] py-16 md:py-24 w-full flex flex-col justify-center">
-          <div className="cta-shell bg-primary text-on-primary rounded-[32px] sm:rounded-[48px] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden">
-            <div className="absolute inset-0 opacity-20">
+          <div className="cta-shell bg-primary text-on-primary rounded-[32px] sm:rounded-[48px] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden transform-gpu">
+            <div className="absolute inset-0 opacity-20 transform-gpu pointer-events-none select-none">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <Image 
                 alt="ZeroCarbon Intelligence Background" 
-                loading="lazy" 
+                priority={true}
                 decoding="async" 
-                className="w-full h-full object-cover" 
+                className="w-full h-full object-cover transform-gpu" 
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBePr2E7EDaeuOTgkBstVxeaD7kEbSc3jTtQo8MtS06eSACutQ8BleHLS3U144QmfxR9iiz6gZpVrrmqFHekjyzAVw6OuzvtjncyRhYNSx2SLRUMZBMk-pPZn4BnHNE__wf9012x0xTHs0FE2TScdd35OCDIGLdW26GKfutb1vwJJ_WbAh8iKwX7VzVJx7nL9ple2U0I-ltJS47FS4woYcmLIe6-06EajLMSYm4BD-EmmLxeiKLWrg"
                 fill
                 sizes="100vw"
@@ -860,43 +860,50 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-surface-mint py-20 px-grid-margin">
-        <div className="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+      <footer className="relative bg-primary text-white py-20 px-grid-margin overflow-hidden border-t border-white/5 select-none">
+        {/* Giant Background watermark text (Otter.ai style) */}
+        <div className="absolute bottom-[-5%] sm:bottom-[-8%] md:bottom-[-10%] left-1/2 -translate-x-1/2 pointer-events-none select-none w-full text-center overflow-hidden z-0">
+          <span className="font-sans font-black text-[9.5vw] tracking-tighter leading-none text-[#092e1e] dark:text-[#092e1e]/85 uppercase block whitespace-nowrap">
+            ZeroCarbon
+          </span>
+        </div>
+
+        <div className="relative z-10 max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
           <div className="col-span-2 md:col-span-1 space-y-6">
-            <div className="font-headline-lg text-[24px] font-bold text-primary">ZeroCarbon MCP</div>
-            <p className="font-body-md text-text-muted">The AI-native OS for sustainable engineering teams.</p>
+            <div className="font-headline-lg text-[24px] font-bold text-white">ZeroCarbon MCP</div>
+            <p className="font-body-md text-neutral-400">The AI-native OS for sustainable engineering teams.</p>
           </div>
           <div>
-            <p className="font-label-caps text-primary mb-6">Product</p>
+            <p className="font-label-caps text-accent-green mb-6 font-bold">Product</p>
             <ul className="space-y-4">
-              <li><Link href="/#features" className="text-body-md text-text-muted hover:text-primary transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#features')}>Solutions</Link></li>
-              <li><Link href="/#architecture" className="text-body-md text-text-muted hover:text-primary transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#architecture')}>Architecture</Link></li>
+              <li><Link href="/#features" className="text-body-md text-neutral-400 hover:text-white transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#features')}>Solutions</Link></li>
+              <li><Link href="/#architecture" className="text-body-md text-neutral-400 hover:text-white transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#architecture')}>Architecture</Link></li>
             </ul>
           </div>
           <div>
-            <p className="font-label-caps text-primary mb-6">Resources</p>
+            <p className="font-label-caps text-accent-green mb-6 font-bold">Resources</p>
             <ul className="space-y-4">
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors" href="/docs">Documentation</Link></li>
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors" href="/docs#authentication">API Reference</Link></li>
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors" href="/#features">Case Studies</Link></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors" href="/docs">Documentation</Link></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors" href="/docs#authentication">API Reference</Link></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors" href="/#features">Case Studies</Link></li>
             </ul>
           </div>
           <div>
-            <p className="font-label-caps text-primary mb-6">Legal</p>
+            <p className="font-label-caps text-accent-green mb-6 font-bold">Legal</p>
             <ul className="space-y-4">
-              <li><a className="text-body-md text-text-muted hover:text-primary transition-colors" href="mailto:support@zerocarbon.org.in">Privacy Policy</a></li>
-              <li><a className="text-body-md text-text-muted hover:text-primary transition-colors" href="mailto:support@zerocarbon.org.in">Terms of Service</a></li>
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors cursor-pointer" href="/#faq" onClick={(e) => handleNavClick(e, '#faq')}>FAQ</Link></li>
+              <li><a className="text-body-md text-neutral-400 hover:text-white transition-colors" href="mailto:support@zerocarbon.org.in">Privacy Policy</a></li>
+              <li><a className="text-body-md text-neutral-400 hover:text-white transition-colors" href="mailto:support@zerocarbon.org.in">Terms of Service</a></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors cursor-pointer" href="/#faq" onClick={(e) => handleNavClick(e, '#faq')}>FAQ</Link></li>
             </ul>
           </div>
         </div>
-        <div className="max-w-container-max mx-auto mt-20 pt-10 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-4 text-body-md text-text-muted">
+        <div className="relative z-10 max-w-container-max mx-auto mt-20 pt-10 border-t border-neutral-900/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-body-md text-neutral-400">
           <p className="text-center sm:text-left">© 2026 ZeroCarbon MCP. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="/" aria-label="ZeroCarbon MCP Public Portal" className="hover:text-primary transition-colors">
+            <Link href="/" aria-label="ZeroCarbon MCP Public Portal" className="hover:text-white transition-colors text-neutral-400">
               <span className="material-symbols-outlined" aria-hidden="true">public</span>
             </Link>
-            <Link href="/docs" aria-label="ZeroCarbon MCP Terminal Console" className="hover:text-primary transition-colors">
+            <Link href="/docs" aria-label="ZeroCarbon MCP Terminal Console" className="hover:text-white transition-colors text-neutral-400">
               <span className="material-symbols-outlined" aria-hidden="true">terminal</span>
             </Link>
           </div>
