@@ -1143,14 +1143,28 @@ export default function Home() {
   }
 }`}
                           </pre>
-                          <button
-                            onClick={() => handleCopy(`{\n  "mcpServers": {\n    "zerocarbon-mcp": {\n      "command": "node",\n      "args": [\n        "/path/to/zerocarbon-mcp-client.js"\n      ],\n      "env": {\n        "ZEROCARBON_API_KEY": "zc_test_f079482xxxxxxxxxxxxxxxxxxxxxxxx",\n        "ZEROCARBON_API_URL": "https://zerocarbon-mcp.onrender.com/api/v1/mcp"\n      }\n    }\n  }\n}`, "claude-json")}
-                            className="absolute top-3 right-3 p-1.5 rounded-lg border border-neutral-700 bg-[#161F1A] hover:bg-[#1E2B24] text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer shrink-0"
-                          >
-                            <span className="material-symbols-outlined text-[16px]">
-                              {copiedText === "claude-json" ? "done" : "content_copy"}
-                            </span>
-                          </button>
+                          <div className="absolute top-3 right-3 flex items-center gap-2">
+                            <AnimatePresence>
+                              {copiedText === "claude-json" && (
+                                <motion.span
+                                  initial={{ opacity: 0, scale: 0.8, x: 4 }}
+                                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                                  exit={{ opacity: 0, scale: 0.8, x: 4 }}
+                                  className="text-[10px] font-bold text-accent-green bg-[#162a20] border border-accent-green/30 px-2.5 py-1 rounded-lg shadow-sm"
+                                >
+                                  Copied!
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
+                            <button
+                              onClick={() => handleCopy(`{\n  "mcpServers": {\n    "zerocarbon-mcp": {\n      "command": "node",\n      "args": [\n        "/path/to/zerocarbon-mcp-client.js"\n      ],\n      "env": {\n        "ZEROCARBON_API_KEY": "zc_test_f079482xxxxxxxxxxxxxxxxxxxxxxxx",\n        "ZEROCARBON_API_URL": "https://zerocarbon-mcp.onrender.com/api/v1/mcp"\n      }\n    }\n  }\n}`, "claude-json")}
+                              className="p-1.5 rounded-lg border border-neutral-700 bg-[#161F1A] hover:bg-[#1E2B24] text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer shrink-0 flex items-center justify-center"
+                            >
+                              <span className="material-symbols-outlined text-[16px]">
+                                {copiedText === "claude-json" ? "done" : "content_copy"}
+                              </span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
