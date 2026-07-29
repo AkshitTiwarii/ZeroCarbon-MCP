@@ -149,7 +149,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
                   </button>
                   <AnimatedButton 
                     as={Link}
-                    href="/request-demo"
+                    href="https://zerocarbon.org.in/request-demo"
                     variant="secondary" 
                     className="px-4 py-1.5 text-xs rounded-full font-bold shadow-sm"
                   >
@@ -162,7 +162,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
               <div className="md:hidden flex items-center gap-2">
                 <AnimatedButton 
                   as={Link}
-                  href="/request-demo"
+                  href="https://zerocarbon.org.in/request-demo"
                   variant="secondary" 
                   className="px-3 py-1 text-[11px] rounded-full font-bold shadow-sm"
                 >

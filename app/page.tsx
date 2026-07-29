@@ -424,7 +424,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <AnimatedButton as={Link} href="/request-demo" variant="solid" className="w-full sm:w-auto px-8 py-3 rounded-full font-body-md text-body-md flex items-center justify-center gap-2 hover:shadow-xl hero-animate pointer-events-auto text-sm">
+                <AnimatedButton as={Link} href="https://zerocarbon.org.in/request-demo" variant="solid" className="w-full sm:w-auto px-8 py-3 rounded-full font-body-md text-body-md flex items-center justify-center gap-2 hover:shadow-xl hero-animate pointer-events-auto text-sm">
                   Request a Demo
                   <span className="material-symbols-outlined text-base">arrow_forward</span>
                 </AnimatedButton>
@@ -493,46 +493,92 @@ export default function Home() {
         {/* End Hero */}
 
         {/* Social Proof with Logo Marquee */}
-        <section id="social-proof" className="min-h-[100dvh] py-16 md:py-24 w-full flex flex-col justify-between py-10">
+        <section id="social-proof" className="py-16 md:py-24 w-full">
           <LogoCloud />
-          <div className="max-w-container-max mx-auto px-grid-margin flex-1 w-full flex flex-col mt-10">
-            <div className="flow-soft flex-1 flex flex-col justify-center relative overflow-hidden rounded-[40px] border border-outline-variant/20 bg-white p-8 lg:p-12 shadow-[0_40px_90px_rgba(3,36,22,0.08)]">
-              <div className="absolute -right-10 top-12 h-48 w-48 rounded-full bg-accent-green/5 blur-2xl"></div>
-              <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.95fr_1.05fr] items-center">
-                <div className="space-y-4">
-                  <p className="font-label-caps text-xs uppercase text-accent-green">Trusted by modern AI teams</p>
-                  <h2 className="gsap-title font-headline-lg text-[2rem] leading-tight text-text-main">Built to scale carbon intelligence across product and operations.</h2>
-                  <p className="max-w-xl font-body-md text-text-muted text-sm">ZeroCarbon MCP delivers live signals, actionable carbon guidance, and policy-safe workflow automation.</p>
+          <div className="max-w-container-max mx-auto px-4 sm:px-grid-margin mt-12">
+            {/* Bold Split Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden rounded-[40px] shadow-[0_40px_100px_rgba(3,36,22,0.18)] border border-outline-variant/10">
+
+              {/* LEFT — Dark immersive panel */}
+              <div className="relative bg-primary overflow-hidden p-10 lg:p-14 flex flex-col justify-between min-h-[420px]">
+                {/* Glow orbs */}
+                <div className="absolute -top-16 -left-16 h-64 w-64 rounded-full bg-accent-green/10 blur-3xl pointer-events-none" />
+                <div className="absolute bottom-0 right-0 h-48 w-48 rounded-full bg-accent-green/5 blur-2xl pointer-events-none" />
+
+                <div className="relative space-y-5">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-accent-green/25 bg-accent-green/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent-green animate-pulse" />
+                    <p className="font-label-caps text-[10px] uppercase tracking-widest text-accent-green">Trusted by modern AI teams</p>
+                  </div>
+                  <h2 className="gsap-title font-headline-lg text-[1.85rem] leading-tight text-white">
+                    Built to scale carbon intelligence across product and operations.
+                  </h2>
+                  <p className="max-w-sm font-body-md text-sm text-white/60 leading-relaxed">
+                    ZeroCarbon MCP delivers live signals, actionable carbon guidance, and policy-safe workflow automation.
+                  </p>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="brand-box float-animation rounded-[28px] border border-outline-variant/15 bg-surface-mint/90 p-4 text-center" style={{ animationDelay: "0s" }}>
-                    <span className="material-symbols-outlined text-2xl text-accent-green">bolt</span>
-                    <p className="mt-2 text-xs font-semibold text-primary">Speed-first</p>
-                  </div>
-                  <div className="brand-box float-animation rounded-[28px] border border-outline-variant/15 bg-surface-mint/90 p-4 text-center" style={{ animationDelay: "0.2s" }}>
-                    <span className="material-symbols-outlined text-2xl text-accent-green">shield</span>
-                    <p className="mt-2 text-xs font-semibold text-primary">Compliance-ready</p>
-                  </div>
-                  <div className="brand-box float-animation rounded-[28px] border border-outline-variant/15 bg-surface-mint/90 p-4 text-center" style={{ animationDelay: "0.4s" }}>
-                    <span className="material-symbols-outlined text-2xl text-accent-green">trending_up</span>
-                    <p className="mt-2 text-xs font-semibold text-primary">Impact-driven</p>
-                  </div>
+
+                {/* Large stat counters */}
+                <div className="relative mt-10 grid grid-cols-3 gap-3">
+                  {[
+                    { label: "Live streams", value: "84%", icon: "sensors" },
+                    { label: "Auto rules", value: "42", icon: "bolt" },
+                    { label: "Verified audits", value: "12k", icon: "verified" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="rounded-[20px] border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
+                      <span className="material-symbols-outlined text-accent-green text-[18px]">{stat.icon}</span>
+                      <p className="mt-2 text-2xl font-bold text-white">{stat.value}</p>
+                      <p className="mt-0.5 text-[10px] uppercase tracking-widest text-white/40">{stat.label}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                <div className="rounded-[28px] bg-primary/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-text-muted">Live streams</p>
-                  <p className="mt-2 text-2xl font-bold text-primary">84%</p>
+
+              {/* RIGHT — Light value-prop cards */}
+              <div className="bg-white p-10 lg:p-14 flex flex-col justify-between gap-6">
+                <div className="space-y-2">
+                  <p className="font-label-caps text-[10px] uppercase tracking-widest text-accent-green">Why teams choose us</p>
+                  <h3 className="font-headline-lg text-[1.5rem] leading-snug text-text-main">Three pillars that make ZeroCarbon MCP different.</h3>
                 </div>
-                <div className="rounded-[28px] bg-primary/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-text-muted">Auto rules</p>
-                  <p className="mt-2 text-2xl font-bold text-primary">42</p>
-                </div>
-                <div className="rounded-[28px] bg-primary/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-text-muted">Verified audits</p>
-                  <p className="mt-2 text-2xl font-bold text-primary">12k</p>
+
+                <div className="flex flex-col gap-4 flex-1">
+                  {[
+                    {
+                      icon: "bolt",
+                      title: "Speed-first architecture",
+                      description: "Sub-30ms latency from signal ingestion to agent action. No queuing, no lag.",
+                      delay: "0s",
+                    },
+                    {
+                      icon: "shield",
+                      title: "Compliance-ready by default",
+                      description: "Built-in CSRD & SEC alignment. Every workflow is audit-logged automatically.",
+                      delay: "0.15s",
+                    },
+                    {
+                      icon: "trending_up",
+                      title: "Impact-driven outcomes",
+                      description: "From data to decisions — track real emission reductions across your entire stack.",
+                      delay: "0.3s",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.title}
+                      className="brand-box group flex items-start gap-4 rounded-[24px] border border-outline-variant/10 bg-surface-mint/40 p-5 hover:bg-surface-mint/70 hover:border-accent-green/20 hover:shadow-md transition-all duration-300"
+                      style={{ animationDelay: item.delay }}
+                    >
+                      <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white border border-outline-variant/10 shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        <span className="material-symbols-outlined text-[18px] text-accent-green">{item.icon}</span>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm text-text-main">{item.title}</p>
+                        <p className="mt-1 text-xs text-text-muted leading-relaxed">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+
             </div>
           </div>
         </section>
@@ -848,7 +894,7 @@ export default function Home() {
               <h2 className="gsap-title font-display-lg text-2xl sm:text-display-lg max-md:text-headline-xl">Bring carbon intelligence back into your workflow.</h2>
               <p className="font-body-xl text-body-xl opacity-80">Join 200+ sustainable engineering teams reducing their compliance load by 60%.</p>
               <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-                <AnimatedButton as={Link} href="/request-demo" variant="secondary" className="px-8 sm:px-12 py-4 sm:py-6 rounded-full font-body-md text-body-md shadow-2xl">
+                <AnimatedButton as={Link} href="https://zerocarbon.org.in/request-demo" variant="secondary" className="px-8 sm:px-12 py-4 sm:py-6 rounded-full font-body-md text-body-md shadow-2xl">
                   Request Demo
                 </AnimatedButton>
                 <AnimatedButton as={Link} href="/docs" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 sm:px-12 py-4 sm:py-6 rounded-full font-body-md text-body-md [--shine:rgba(255,255,255,0.4)]">
