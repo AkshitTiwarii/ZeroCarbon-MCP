@@ -453,7 +453,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <AnimatedButton as={Link} href="/request-demo" variant="solid" className="w-full sm:w-auto px-8 py-3 rounded-full font-body-md text-body-md flex items-center justify-center gap-2 hover:shadow-xl hero-animate pointer-events-auto text-sm">
+                <AnimatedButton as={Link} href="https://zerocarbon.org.in/request-demo" variant="solid" className="w-full sm:w-auto px-8 py-3 rounded-full font-body-md text-body-md flex items-center justify-center gap-2 hover:shadow-xl hero-animate pointer-events-auto text-sm">
                   Request a Demo
                   <span className="material-symbols-outlined text-base">arrow_forward</span>
                 </AnimatedButton>
@@ -880,7 +880,7 @@ export default function Home() {
               <h2 className="gsap-title font-display-lg text-2xl sm:text-display-lg max-md:text-headline-xl">Bring carbon intelligence back into your workflow.</h2>
               <p className="font-body-xl text-body-xl opacity-80">Join 200+ sustainable engineering teams reducing their compliance load by 60%.</p>
               <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-                <AnimatedButton as={Link} href="/request-demo" variant="secondary" className="px-8 sm:px-12 py-4 sm:py-6 rounded-full font-body-md text-body-md shadow-2xl">
+                <AnimatedButton as={Link} href="https://zerocarbon.org.in/request-demo" variant="secondary" className="px-8 sm:px-12 py-4 sm:py-6 rounded-full font-body-md text-body-md shadow-2xl">
                   Request Demo
                 </AnimatedButton>
                 <AnimatedButton as={Link} href="/docs" variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 sm:px-12 py-4 sm:py-6 rounded-full font-body-md text-body-md [--shine:rgba(255,255,255,0.4)]">
