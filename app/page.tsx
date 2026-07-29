@@ -208,35 +208,6 @@ export default function Home() {
       );
     }
 
-    // ─── 5. Count-up stats ──────────────────────────────────────────────────
-    const stats = gsap.utils.toArray<HTMLElement>("[data-count]");
-    if (stats.length > 0 && document.querySelector("#architecture")) {
-      stats.forEach((el) => {
-        const target = Number(el.getAttribute("data-count") ?? "0");
-        const suffix = el.getAttribute("data-count-suffix") ?? "";
-        const prefix = el.getAttribute("data-count-prefix") ?? "";
-        const divider = el.getAttribute("data-count-divider") ?? "";
-        const counter = { val: 0 };
-
-        gsap.to(counter, {
-          val: target,
-          duration: 1.4,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: "#architecture",
-            start: "top 80%",
-            once: true,
-          },
-          onUpdate: () => {
-            const current = Math.round(counter.val);
-            el.textContent = divider
-              ? `${current}${divider}${suffix}`
-              : `${prefix}${current}${suffix}`;
-          },
-        });
-      });
-    }
-
     // ─── 6. Architecture stagger items ──────────────────────────────────────
     if (document.querySelector("#architecture .stagger-item")) {
       gsap.fromTo(
@@ -463,34 +434,31 @@ export default function Home() {
                   </span>
                   
                   {/* Icons row */}
-                  <div className="flex items-center gap-1.5 border-l border-neutral-200 dark:border-outline-variant/20 pl-3 mr-1">
-                    {/* Claude/Anthropic (Orange Asterisk/Flower) */}
-                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="Claude / Anthropic">
-                      <svg className="w-3.5 h-3.5 text-[#D97706]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2a1 1 0 011 1v6.59l4.66-4.66a1 1 0 111.41 1.41L14.41 11H21a1 1 0 110 2h-6.59l4.66 4.66a1 1 0 01-1.41 1.41L13 14.41V21a1 1 0 11-2 0v-6.59l-4.66 4.66a1 1 0 01-1.41-1.41L9.59 13H3a1 1 0 110-2h6.59L4.93 6.34a1 1 0 011.41-1.41L11 9.59V3a1 1 0 011-1z" />
-                      </svg>
-                    </span>
-                    
-                    {/* Vercel (Black Triangle) */}
-                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="Vercel">
-                      <svg className="w-3.5 h-3.5 text-black dark:text-white" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 1L24 22H0L12 1z" />
+                  <div className="flex items-center gap-2 border-l border-neutral-200 dark:border-outline-variant/20 pl-3 mr-1">
+                    {/* Claude (Anthropic) */}
+                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="Claude">
+                      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-[#D97757]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z" />
                       </svg>
                     </span>
 
-                    {/* OpenAI/ChatGPT (Green Spiral) */}
-                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="OpenAI / ChatGPT">
-                      <svg className="w-3.5 h-3.5 text-[#10a37f]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M21.7 10.9a5.5 5.5 0 00-.7-2.9 5.6 5.6 0 00-2.3-2.1c-.2-.1-.4-.2-.7-.2h-.2c0-.4-.1-.8-.3-1.1a5.6 5.6 0 00-3.6-3.1 5.3 5.3 0 00-3.5.2c-.3.1-.5.3-.7.5l-.2.1c-.2-.2-.5-.4-.8-.5a5.5 5.5 0 00-5.8 1.1 5.5 5.5 0 00-1.4 3.7c0 .1 0 .2.1.4l-.1.1a5.5 5.5 0 00-.8 3.5 5.5 5.5 0 002.3 4.1c.2.1.4.2.7.2.1.2.2.4.3.6a5.5 5.5 0 003.8 2.7 5.4 5.4 0 003.1-.3l.7-.4.2-.1c.2.2.5.4.8.5a5.5 5.5 0 005.8-1.1 5.5 5.5 0 001.4-3.7c0-.2 0-.3-.1-.5v-.1c.3.1.5.1.8.1a5.5 5.5 0 004-1.9 5.5 5.5 0 001.2-3.7z" />
+                    {/* Cursor IDE */}
+                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="Cursor">
+                      <svg className="w-3.5 h-3.5 fill-slate-900 dark:fill-white" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23" />
                       </svg>
                     </span>
 
-                    {/* Robot head/Copilot (Gray) */}
-                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="AI Agents / Copilot">
-                      <svg className="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M18 10h-1.25A4.75 4.75 0 0012 14.75v0A4.75 4.75 0 007.25 10H6a4 4 0 00-4 4v2a4 4 0 004 4h12a4 4 0 004-4v-2a4 4 0 00-4-4z" />
-                        <circle cx="12" cy="5" r="3" />
+                    {/* Windsurf */}
+                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="Windsurf">
+                      <svg className="w-3.5 h-3.5 fill-[#00c0a9]" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M23.55 5.067c-1.2038-.002-2.1806.973-2.1806 2.1765v4.8676c0 .972-.8035 1.7594-1.7597 1.7594-.568 0-1.1352-.286-1.4718-.7659l-4.9713-7.1003c-.4125-.5896-1.0837-.941-1.8103-.941-1.1334 0-2.1533.9635-2.1533 2.153v4.8957c0 .972-.7969 1.7594-1.7596 1.7594-.57 0-1.1363-.286-1.4728-.7658L.4076 5.1598C.2822 4.9798 0 5.0688 0 5.2882v4.2452c0 .2147.0656.4228.1884.599l5.4748 7.8183c.3234.462.8006.9298 1.3509.9298 1.3771.313 2.6446-.747 2.6446-2.0977v-4.893c0-.972.7875-1.7593 1.7596-1.7593h.003a1.798 1.798 0 0 1 1.4718.7658l4.9723 7.0994c.4135.5905 1.05.941 1.8093.941 1.1587 0 2.1515-.9645 2.1515-2.153v-4.8948c0-.972.7875-1.7594 1.7596-1.7594h.194a.22.22 0 0 0 .2204-.2202v-4.622a.22.22 0 0 0-.2203-.2203Z" />
                       </svg>
+                    </span>
+
+                    {/* Gemini */}
+                    <span className="hover:scale-110 transition-transform duration-200 flex items-center" title="Gemini">
+                      <img src="https://svgl.app/library/gemini.svg" alt="Gemini" className="w-3.5 h-3.5" />
                     </span>
                   </div>
 
@@ -909,14 +877,14 @@ export default function Home() {
 
         {/* Final CTA */}
         <section id="contact" className="px-4 sm:px-grid-margin min-h-[100dvh] py-16 md:py-24 w-full flex flex-col justify-center">
-          <div className="cta-shell bg-primary text-on-primary rounded-[32px] sm:rounded-[48px] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden">
-            <div className="absolute inset-0 opacity-20">
+          <div className="cta-shell bg-primary text-on-primary rounded-[32px] sm:rounded-[48px] p-8 sm:p-12 md:p-20 text-center relative overflow-hidden transform-gpu">
+            <div className="absolute inset-0 opacity-20 transform-gpu pointer-events-none select-none">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <Image 
                 alt="ZeroCarbon Intelligence Background" 
-                loading="lazy" 
+                priority={true}
                 decoding="async" 
-                className="w-full h-full object-cover" 
+                className="w-full h-full object-cover transform-gpu" 
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuBePr2E7EDaeuOTgkBstVxeaD7kEbSc3jTtQo8MtS06eSACutQ8BleHLS3U144QmfxR9iiz6gZpVrrmqFHekjyzAVw6OuzvtjncyRhYNSx2SLRUMZBMk-pPZn4BnHNE__wf9012x0xTHs0FE2TScdd35OCDIGLdW26GKfutb1vwJJ_WbAh8iKwX7VzVJx7nL9ple2U0I-ltJS47FS4woYcmLIe6-06EajLMSYm4BD-EmmLxeiKLWrg"
                 fill
                 sizes="100vw"
@@ -938,43 +906,50 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-surface-mint py-20 px-grid-margin">
-        <div className="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+      <footer className="relative bg-primary text-white py-20 px-grid-margin overflow-hidden border-t border-white/5 select-none">
+        {/* Giant Background watermark text (Otter.ai style) */}
+        <div className="absolute bottom-[-5%] sm:bottom-[-8%] md:bottom-[-10%] left-1/2 -translate-x-1/2 pointer-events-none select-none w-full text-center overflow-hidden z-0">
+          <span className="font-sans font-black text-[9.5vw] tracking-tighter leading-none text-[#092e1e] dark:text-[#092e1e]/85 uppercase block whitespace-nowrap">
+            ZeroCarbon
+          </span>
+        </div>
+
+        <div className="relative z-10 max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
           <div className="col-span-2 md:col-span-1 space-y-6">
-            <div className="font-headline-lg text-[24px] font-bold text-primary">ZeroCarbon MCP</div>
-            <p className="font-body-md text-text-muted">The AI-native OS for sustainable engineering teams.</p>
+            <div className="font-headline-lg text-[24px] font-bold text-white">ZeroCarbon MCP</div>
+            <p className="font-body-md text-neutral-400">The AI-native OS for sustainable engineering teams.</p>
           </div>
           <div>
-            <p className="font-label-caps text-primary mb-6">Product</p>
+            <p className="font-label-caps text-accent-green mb-6 font-bold">Product</p>
             <ul className="space-y-4">
-              <li><Link href="/#features" className="text-body-md text-text-muted hover:text-primary transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#features')}>Solutions</Link></li>
-              <li><Link href="/#architecture" className="text-body-md text-text-muted hover:text-primary transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#architecture')}>Architecture</Link></li>
+              <li><Link href="/#features" className="text-body-md text-neutral-400 hover:text-white transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#features')}>Solutions</Link></li>
+              <li><Link href="/#architecture" className="text-body-md text-neutral-400 hover:text-white transition-colors cursor-pointer" onClick={(e) => handleNavClick(e, '#architecture')}>Architecture</Link></li>
             </ul>
           </div>
           <div>
-            <p className="font-label-caps text-primary mb-6">Resources</p>
+            <p className="font-label-caps text-accent-green mb-6 font-bold">Resources</p>
             <ul className="space-y-4">
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors" href="/docs">Documentation</Link></li>
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors" href="/docs#authentication">API Reference</Link></li>
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors" href="/#features">Case Studies</Link></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors" href="/docs">Documentation</Link></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors" href="/docs#authentication">API Reference</Link></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors" href="/#features">Case Studies</Link></li>
             </ul>
           </div>
           <div>
-            <p className="font-label-caps text-primary mb-6">Legal</p>
+            <p className="font-label-caps text-accent-green mb-6 font-bold">Legal</p>
             <ul className="space-y-4">
-              <li><a className="text-body-md text-text-muted hover:text-primary transition-colors" href="mailto:support@zerocarbon.org.in">Privacy Policy</a></li>
-              <li><a className="text-body-md text-text-muted hover:text-primary transition-colors" href="mailto:support@zerocarbon.org.in">Terms of Service</a></li>
-              <li><Link className="text-body-md text-text-muted hover:text-primary transition-colors cursor-pointer" href="/#faq" onClick={(e) => handleNavClick(e, '#faq')}>FAQ</Link></li>
+              <li><a className="text-body-md text-neutral-400 hover:text-white transition-colors" href="mailto:support@zerocarbon.org.in">Privacy Policy</a></li>
+              <li><a className="text-body-md text-neutral-400 hover:text-white transition-colors" href="mailto:support@zerocarbon.org.in">Terms of Service</a></li>
+              <li><Link className="text-body-md text-neutral-400 hover:text-white transition-colors cursor-pointer" href="/#faq" onClick={(e) => handleNavClick(e, '#faq')}>FAQ</Link></li>
             </ul>
           </div>
         </div>
-        <div className="max-w-container-max mx-auto mt-20 pt-10 border-t border-outline-variant/30 flex flex-col sm:flex-row justify-between items-center gap-4 text-body-md text-text-muted">
+        <div className="relative z-10 max-w-container-max mx-auto mt-20 pt-10 border-t border-neutral-900/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-body-md text-neutral-400">
           <p className="text-center sm:text-left">© 2026 ZeroCarbon MCP. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="/" aria-label="ZeroCarbon MCP Public Portal" className="hover:text-primary transition-colors">
+            <Link href="/" aria-label="ZeroCarbon MCP Public Portal" className="hover:text-white transition-colors text-neutral-400">
               <span className="material-symbols-outlined" aria-hidden="true">public</span>
             </Link>
-            <Link href="/docs" aria-label="ZeroCarbon MCP Terminal Console" className="hover:text-primary transition-colors">
+            <Link href="/docs" aria-label="ZeroCarbon MCP Terminal Console" className="hover:text-white transition-colors text-neutral-400">
               <span className="material-symbols-outlined" aria-hidden="true">terminal</span>
             </Link>
           </div>
@@ -1119,24 +1094,56 @@ export default function Home() {
                 {/* Horizontal Tab bar */}
                 <div className="flex items-center gap-1 border-b border-outline-variant/40 pb-2 overflow-x-auto select-none scrollbar-none -mx-1 px-1">
                   {[
-                    { id: "claude", label: "CLAUDE" },
-                    { id: "cursor", label: "CURSOR" },
-                    { id: "claude-code", label: "CODE CLI" },
-                    { id: "gemini", label: "GEMINI" },
-                    { id: "api", label: "cURL" },
-                    { id: "ai-guide", label: "AI GUIDE" },
+                    {
+                      id: "claude",
+                      label: "",
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0 fill-[#D97757]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                          <path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z" />
+                        </svg>
+                      ),
+                      iconDark: null,
+                    },
+                    {
+                      id: "cursor",
+                      label: "CURSOR",
+                      icon: (
+                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0 fill-slate-800 dark:fill-white" aria-hidden="true">
+                          <path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23" />
+                        </svg>
+                      ),
+                      iconDark: null,
+                    },
+                    {
+                      id: "claude-code",
+                      label: "CODE CLI",
+                      icon: null,
+                      iconDark: null,
+                    },
+                    {
+                      id: "gemini",
+                      label: "GEMINI",
+                      icon: (
+                        <img src="https://svgl.app/library/gemini.svg" alt="Gemini" className="w-3.5 h-3.5 shrink-0" />
+                      ),
+                      iconDark: null,
+                    },
+                    { id: "api", label: "cURL", icon: null, iconDark: null },
+                    { id: "ai-guide", label: "AI GUIDE", icon: null, iconDark: null },
                   ].map((tab) => {
                     const isActive = activeMcpTab === tab.id;
                     return (
                       <button
                         key={tab.id}
                         onClick={() => setActiveMcpTab(tab.id)}
-                        className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 border ${
+                        className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold transition-all duration-200 cursor-pointer shrink-0 border flex items-center gap-1.5 ${
                           isActive
                             ? "bg-instructions-bg border-outline-variant/40 text-text-main shadow-sm"
                             : "bg-transparent border-transparent text-text-muted hover:text-text-main"
                         }`}
                       >
+                        {tab.icon}
+                        {tab.iconDark}
                         {tab.label}
                       </button>
                     );
@@ -1182,14 +1189,28 @@ export default function Home() {
   }
 }`}
                           </pre>
-                          <button
-                            onClick={() => handleCopy(`{\n  "mcpServers": {\n    "zerocarbon-mcp": {\n      "command": "node",\n      "args": [\n        "/path/to/zerocarbon-mcp-client.js"\n      ],\n      "env": {\n        "ZEROCARBON_API_KEY": "zc_test_f079482xxxxxxxxxxxxxxxxxxxxxxxx",\n        "ZEROCARBON_API_URL": "https://zerocarbon-mcp.onrender.com/api/v1/mcp"\n      }\n    }\n  }\n}`, "claude-json")}
-                            className="absolute top-3 right-3 p-1.5 rounded-lg border border-neutral-700 bg-[#161F1A] hover:bg-[#1E2B24] text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer shrink-0"
-                          >
-                            <span className="material-symbols-outlined text-[16px]">
-                              {copiedText === "claude-json" ? "done" : "content_copy"}
-                            </span>
-                          </button>
+                          <div className="absolute top-3 right-3 flex items-center gap-2">
+                            <AnimatePresence>
+                              {copiedText === "claude-json" && (
+                                <motion.span
+                                  initial={{ opacity: 0, scale: 0.8, x: 4 }}
+                                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                                  exit={{ opacity: 0, scale: 0.8, x: 4 }}
+                                  className="text-[10px] font-bold text-accent-green bg-[#162a20] border border-accent-green/30 px-2.5 py-1 rounded-lg shadow-sm"
+                                >
+                                  Copied!
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
+                            <button
+                              onClick={() => handleCopy(`{\n  "mcpServers": {\n    "zerocarbon-mcp": {\n      "command": "node",\n      "args": [\n        "/path/to/zerocarbon-mcp-client.js"\n      ],\n      "env": {\n        "ZEROCARBON_API_KEY": "zc_test_f079482xxxxxxxxxxxxxxxxxxxxxxxx",\n        "ZEROCARBON_API_URL": "https://zerocarbon-mcp.onrender.com/api/v1/mcp"\n      }\n    }\n  }\n}`, "claude-json")}
+                              className="p-1.5 rounded-lg border border-neutral-700 bg-[#161F1A] hover:bg-[#1E2B24] text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer shrink-0 flex items-center justify-center"
+                            >
+                              <span className="material-symbols-outlined text-[16px]">
+                                {copiedText === "claude-json" ? "done" : "content_copy"}
+                              </span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>

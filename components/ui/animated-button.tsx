@@ -53,7 +53,7 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
         damping: 30,
         mass: 0.5,
       }}
-      className={`group inline-flex items-center justify-center relative overflow-hidden font-bold transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ${variantClasses} ${className}`}
+      className={`group inline-flex items-center justify-center relative overflow-hidden font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-green focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variantClasses} ${className}`}
     >
       {/* Text with shine mask — sweeps left-to-right on hover */}
       <motion.span

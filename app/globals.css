@@ -71,6 +71,10 @@
   --font-newsreader: var(--font-newsreader);
   --font-hanken-grotesk: var(--font-hanken-grotesk);
 
+  --font-sans: var(--font-hanken-grotesk), sans-serif;
+  --font-serif: var(--font-newsreader), serif;
+  --font-display-md: var(--font-newsreader), serif;
+
   --font-headline-lg-mobile: var(--font-newsreader), serif;
   --font-label-caps: var(--font-hanken-grotesk), sans-serif;
   --font-body-md: var(--font-hanken-grotesk), sans-serif;
@@ -154,14 +158,14 @@ html.dark {
   --color-background: #0B0F0D;
   --color-off-white: #0B0F0D;
   --color-text-main: #ffffff;
-  --color-text-muted: #d1e7dd;
-  --color-primary: #032416;
-  --color-on-primary: #ffffff;
+  --color-text-muted: #a3b8ad;
+  --color-primary: #86efac;
+  --color-on-primary: #032416;
   --color-surface-mint: #0a1f15;
   --color-outline-variant: #283a30;
   --color-surface: #0B0F0D;
   --color-surface-container-low: #0f1613;
-  --color-accent-green: #032416;
+  --color-accent-green: #4ade80;
   --color-secondary-container: #0a1f15;
   --color-on-secondary-container: #b7ccb9;
   --color-surface-variant: #1c2621;
@@ -268,27 +272,7 @@ html.dark {
   color: #ffffff !important;
 }
 
-/* Force all text elements to be white in dark mode */
-.dark p,
-.dark span,
-.dark div,
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark h5,
-.dark h6,
-.dark a,
-.dark button,
-.dark input,
-.dark textarea,
-.dark select,
-.dark label,
-.dark li,
-.dark td,
-.dark th {
-  color: #ffffff !important;
-}
+/* Restored standard theme color overrides for specific tags */
 
 /* Allow specific accent colors to override */
 .dark .text-accent-green,
@@ -921,7 +905,7 @@ body {
 
 
 .material-symbols-outlined {
-  font-family: 'Material Symbols Outlined', sans-serif;
+  font-family: 'Material Symbols Outlined' !important;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
@@ -952,3 +936,34 @@ body {
     -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* ZeroCarbon Documentation Premium Typography Matching System */
+.docs-page-container {
+  font-family: var(--font-hanken-grotesk), sans-serif !important;
+}
+
+.docs-sidebar a:not(.material-symbols-outlined),
+.docs-sidebar button:not(.material-symbols-outlined),
+.docs-outline a:not(.material-symbols-outlined),
+.docs-outline h5 {
+  font-family: var(--font-hanken-grotesk), sans-serif !important;
+}
+
+.docs-content h1,
+.docs-content h2,
+.docs-content h3,
+.docs-content h4 {
+  font-family: var(--font-newsreader), serif !important;
+}
+
+.docs-content p,
+.docs-content li,
+.docs-content td,
+.docs-content th,
+.docs-content code:not(.font-mono),
+.docs-content span:not(.font-mono):not(.material-symbols-outlined),
+.docs-content strong,
+.docs-content a:not(.material-symbols-outlined) {
+  font-family: var(--font-hanken-grotesk), sans-serif !important;
+}
+

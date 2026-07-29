@@ -8,6 +8,160 @@ export interface DocsContentProps {
   copiedTextId: string | null;
 }
 
+function highlightCode(code: string, language: string): React.ReactNode {
+  const lang = language.toLowerCase();
+  
+  if (lang === "typescript" || lang === "javascript" || lang === "ts" || lang === "js") {
+    const tokenRegex = /(\/\/.*)|("(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*'|`(?:\\.|[^\\`])*`)|(\b(?:const|let|var|function|return|await|async|import|export|from|interface|type|class|extends|new|if|else|for|while|try|catch|finally)\b)|(\b(?:string|number|boolean|null|undefined|void|any|true|false)\b)|(\b[a-zA-Z_][a-zA-Z0-9_]*(?=\())|(\b\d+\b)/g;
+
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = tokenRegex.exec(code)) !== null) {
+      const matchIndex = match.index;
+      const text = match[0];
+
+      if (matchIndex > lastIndex) {
+        parts.push(code.substring(lastIndex, matchIndex));
+      }
+
+      if (match[1]) {
+        parts.push(<span key={matchIndex} className="text-[#6A9955] italic">{text}</span>);
+      } else if (match[2]) {
+        parts.push(<span key={matchIndex} className="text-[#CE9178]">{text}</span>);
+      } else if (match[3]) {
+        parts.push(<span key={matchIndex} className="text-[#569CD6] font-semibold">{text}</span>);
+      } else if (match[4]) {
+        parts.push(<span key={matchIndex} className="text-[#4EC9B0]">{text}</span>);
+      } else if (match[5]) {
+        parts.push(<span key={matchIndex} className="text-[#DCDCAA]">{text}</span>);
+      } else if (match[6]) {
+        parts.push(<span key={matchIndex} className="text-[#B5CEA8]">{text}</span>);
+      }
+
+      lastIndex = tokenRegex.lastIndex;
+    }
+
+    if (lastIndex < code.length) {
+      parts.push(code.substring(lastIndex));
+    }
+
+    return <>{parts}</>;
+  }
+
+  if (lang === "json") {
+    const tokenRegex = /("(?:\\.|[^\\"])*")|(\b\d+\b)|(\b(?:true|false|null)\b)/g;
+
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = tokenRegex.exec(code)) !== null) {
+      const matchIndex = match.index;
+      const text = match[0];
+
+      if (matchIndex > lastIndex) {
+        parts.push(code.substring(lastIndex, matchIndex));
+      }
+
+      if (match[1]) {
+        const remainder = code.substring(tokenRegex.lastIndex);
+        const isKey = /^\s*:/.test(remainder);
+        if (isKey) {
+          parts.push(<span key={matchIndex} className="text-[#9CDCFE]">{text}</span>);
+        } else {
+          parts.push(<span key={matchIndex} className="text-[#CE9178]">{text}</span>);
+        }
+      } else if (match[2]) {
+        parts.push(<span key={matchIndex} className="text-[#B5CEA8]">{text}</span>);
+      } else if (match[3]) {
+        parts.push(<span key={matchIndex} className="text-[#569CD6] font-semibold">{text}</span>);
+      }
+
+      lastIndex = tokenRegex.lastIndex;
+    }
+
+    if (lastIndex < code.length) {
+      parts.push(code.substring(lastIndex));
+    }
+
+    return <>{parts}</>;
+  }
+
+  if (lang === "bash" || lang === "shell" || lang === "sh") {
+    const tokenRegex = /(#.*)|("(?:\\.|[^\\"])*"|'(?:\\.|[^\\'])*')|(\b(?:npm|yarn|npx|curl|git|run|install|add|dev|build|start)\b)|(\s-[a-zA-Z0-9-]+)/g;
+
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = tokenRegex.exec(code)) !== null) {
+      const matchIndex = match.index;
+      const text = match[0];
+
+      if (matchIndex > lastIndex) {
+        parts.push(code.substring(lastIndex, matchIndex));
+      }
+
+      if (match[1]) {
+        parts.push(<span key={matchIndex} className="text-[#6A9955] italic">{text}</span>);
+      } else if (match[2]) {
+        parts.push(<span key={matchIndex} className="text-[#CE9178]">{text}</span>);
+      } else if (match[3]) {
+        parts.push(<span key={matchIndex} className="text-[#569CD6] font-semibold">{text}</span>);
+      } else if (match[4]) {
+        parts.push(<span key={matchIndex} className="text-[#9CDCFE]">{text}</span>);
+      }
+
+      lastIndex = tokenRegex.lastIndex;
+    }
+
+    if (lastIndex < code.length) {
+      parts.push(code.substring(lastIndex));
+    }
+
+    return <>{parts}</>;
+  }
+
+  if (lang === "markdown" || lang === "md") {
+    const tokenRegex = /(^#[^\n]*)|(\*\*.*?\*\*|\*.*?\*)|(`.*?`)|(^\s*(?:\d+\.|-)\s)/gm;
+
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = tokenRegex.exec(code)) !== null) {
+      const matchIndex = match.index;
+      const text = match[0];
+
+      if (matchIndex > lastIndex) {
+        parts.push(code.substring(lastIndex, matchIndex));
+      }
+
+      if (match[1]) {
+        parts.push(<span key={matchIndex} className="text-[#569CD6] font-bold">{text}</span>);
+      } else if (match[2]) {
+        parts.push(<span key={matchIndex} className="text-[#CE9178] font-semibold">{text}</span>);
+      } else if (match[3]) {
+        parts.push(<span key={matchIndex} className="text-[#4EC9B0] bg-[#1E2E24]/20 px-1 rounded font-mono">{text}</span>);
+      } else if (match[4]) {
+        parts.push(<span key={matchIndex} className="text-[#E06C75] font-bold">{text}</span>);
+      }
+
+      lastIndex = tokenRegex.lastIndex;
+    }
+
+    if (lastIndex < code.length) {
+      parts.push(code.substring(lastIndex));
+    }
+
+    return <>{parts}</>;
+  }
+
+  return <span className="text-[#a9b1d6]">{code}</span>;
+}
+
 function CodeBlock({
   code,
   language,
@@ -22,20 +176,20 @@ function CodeBlock({
   copiedTextId: string | null;
 }) {
   return (
-    <div className="rounded-2xl border border-neutral-800 overflow-hidden shadow-sm bg-[#0B0F0D]">
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#121815] border-b border-neutral-800 select-none">
-        <span className="text-xs font-bold uppercase text-zinc-300 dark:text-text-muted">{language}</span>
+    <div className="rounded-2xl border border-neutral-800 dark:border-white/10 overflow-hidden shadow-sm bg-[#0A0F0D]">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[#101714] border-b border-neutral-800 dark:border-white/5 select-none">
+        <span className="text-xs font-bold uppercase text-zinc-400 dark:text-text-muted">{language}</span>
         <button
           onClick={() => onCopy(code, copyId)}
-          className="p-1.5 rounded-lg border border-neutral-700 bg-[#161F1A] hover:bg-[#1E2B24] text-zinc-400 dark:text-text-muted hover:text-zinc-200 dark:hover:text-text-main transition-colors cursor-pointer shrink-0"
+          className="p-1.5 rounded-lg border border-neutral-700 bg-[#16221C] hover:bg-[#1E2E25] text-zinc-400 dark:text-text-muted hover:text-zinc-200 dark:hover:text-text-main transition-colors cursor-pointer shrink-0"
         >
           <span className="material-symbols-outlined text-[16px]">
             {copiedTextId === copyId ? "done" : "content_copy"}
           </span>
         </button>
       </div>
-      <div className="p-5 overflow-x-auto bg-[#0A0E0C]">
-        <pre className="font-mono text-xs text-accent-green-text leading-relaxed whitespace-pre">{code}</pre>
+      <div className="p-5 overflow-x-auto bg-[#0A0F0D]">
+        <pre className="font-mono text-xs text-[#a9b1d6] leading-relaxed whitespace-pre">{highlightCode(code, language)}</pre>
       </div>
     </div>
   );
@@ -46,7 +200,7 @@ export function DocsContent({
   copiedTextId,
 }: DocsContentProps) {
   return (
-    <div className="w-full space-y-20 pb-24 text-[#333] dark:text-[#E2E8F0]">
+    <div className="w-full space-y-20 pb-24 text-[#333] dark:text-[#E2E8F0] docs-content">
       {/* ---------------- SECTION 1: INTRODUCTION ---------------- */}
       <section id="introduction" className="scroll-mt-24 space-y-8">
         <div>
@@ -990,18 +1144,15 @@ print(f"🔗 Activity ID: {result['activity_id']}")`}
           <div className="p-5 sm:p-6 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm">
             <div className="grid gap-2 md:grid-cols-5">
               {[
-                { t: "1", title: "Upload", desc: "PDF bill via drag-and-drop or API", icon: "upload_file" },
-                { t: "2", title: "OCR", desc: "Cloudinary text extraction pipeline", icon: "document_scanner" },
-                { t: "3", title: "Embed", desc: "Gemini 2.5 → pgvector (768-dim)", icon: "vectors" },
-                { t: "4", title: "Parse", desc: "Agent extracts qty + period + supplier", icon: "data_object" },
-                { t: "5", title: "Ledger", desc: "carbon.activities.submit with idempotency", icon: "account_balance" },
-              ].map((step) => (
-                <div key={step.t} className="relative p-4 rounded-xl bg-instructions-bg border border-outline-variant/20 text-center space-y-1.5">
-                  <div className="flex items-center justify-between w-full mb-1">
-                    <div className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-violet-600 text-white text-[11px] font-extrabold">
-                      {step.t}
-                    </div>
-                    <span className="material-symbols-outlined text-violet-600 dark:text-violet-400 text-[18px]">{step.icon}</span>
+                { title: "Upload", desc: "PDF bill via drag-and-drop or API", icon: "upload_file" },
+                { title: "OCR", desc: "Cloudinary text extraction pipeline", icon: "document_scanner" },
+                { title: "Embed", desc: "Gemini 2.5 → pgvector (768-dim)", icon: "bubble_chart" },
+                { title: "Parse", desc: "Agent extracts qty + period + supplier", icon: "data_object" },
+                { title: "Ledger", desc: "carbon.activities.submit with idempotency", icon: "account_balance" },
+              ].map((step, i) => (
+                <div key={i} className="relative p-4 rounded-xl bg-instructions-bg border border-outline-variant/20 text-center space-y-1.5">
+                  <div className="flex items-center justify-center w-full mb-2">
+                    <span className="material-symbols-outlined text-violet-600 dark:text-violet-400 text-[20px] p-1.5 rounded-xl bg-violet-500/10 dark:bg-violet-500/20">{step.icon}</span>
                   </div>
                   <div className="text-xs font-extrabold text-text-main">{step.title}</div>
                   <div className="text-[10.5px] text-text-muted leading-relaxed">{step.desc}</div>
@@ -2312,9 +2463,8 @@ const data = await response.json();`}
             ].map((st, i) => (
               <div key={i} className="relative p-4 rounded-xl bg-instructions-bg border border-outline-variant/20 text-center space-y-1.5">
                 {i < 4 && <span className="hidden md:block absolute right-[-10px] top-1/2 -translate-y-1/2 text-slate-300 dark:text-neutral-600 material-symbols-outlined z-10">chevron_right</span>}
-                <div className="flex items-center justify-between w-full mb-1">
-                  <div className={`inline-flex items-center justify-center w-7 h-7 rounded-lg text-white text-[11px] font-extrabold ${st.color}`}>{st.n}</div>
-                  <span className={`material-symbols-outlined text-white text-[17px] p-0.5 rounded-md ${st.color}`}>{st.icon}</span>
+                <div className="flex items-center justify-center w-full mb-2">
+                  <span className={`material-symbols-outlined text-white text-[20px] p-1.5 rounded-xl ${st.color}`}>{st.icon}</span>
                 </div>
                 <div className="text-xs font-extrabold text-text-main">{st.name}</div>
                 <div className="text-[10.5px] text-text-muted leading-relaxed">{st.desc}</div>
@@ -3468,15 +3618,15 @@ const activity: ActivitySubmission = {
           </h3>
           <div className="grid md:grid-cols-4 gap-2">
             {[
-              { n: "1", title: "Create Session", d: "Your code calls marketplace/checkout.", c: "bg-slate-700" },
-              { n: "2", title: "Pricing + 3% fee", d: "Base credit cost + ZeroCarbon 3% platform fee.", c: "bg-indigo-600" },
-              { n: "3", title: "Dodo Hosted Page", d: "User pays on dodo.money — tax/VAT auto-computed.", c: "bg-orange-500" },
-              { n: "4", title: "Webhook → Ledger", d: "Decrement inventory, issue Certificate + Retirement.", c: "bg-[#00875A]" },
+              { title: "Create Session", d: "Your code calls marketplace/checkout.", icon: "shopping_cart", c: "text-slate-700 bg-slate-500/10 dark:bg-slate-500/20" },
+              { title: "Pricing + 3% fee", d: "Base credit cost + ZeroCarbon 3% platform fee.", icon: "payments", c: "text-indigo-600 bg-indigo-500/10 dark:bg-indigo-500/20" },
+              { title: "Dodo Hosted Page", d: "User pays on dodo.money — tax/VAT auto-computed.", icon: "credit_card", c: "text-orange-500 bg-orange-500/10 dark:bg-orange-500/20" },
+              { title: "Webhook → Ledger", d: "Decrement inventory, issue Certificate + Retirement.", icon: "account_balance", c: "text-[#00875A] bg-[#00875A]/10 dark:bg-[#00875A]/20" },
             ].map((st, i) => (
               <div key={i} className="relative p-4 rounded-xl bg-white dark:bg-neutral-800 border border-outline-variant/20 text-center space-y-1.5">
                 {i < 3 && <span className="hidden md:block absolute right-[-10px] top-1/2 -translate-y-1/2 text-slate-300 dark:text-neutral-600 material-symbols-outlined z-10">chevron_right</span>}
-                <div className="flex items-center justify-between w-full mb-1">
-                  <div className={`inline-flex items-center justify-center w-7 h-7 rounded-lg text-white text-[11px] font-extrabold ${st.c}`}>{st.n}</div>
+                <div className="flex items-center justify-center w-full mb-2">
+                  <span className={`material-symbols-outlined text-[20px] p-1.5 rounded-xl ${st.c}`}>{st.icon}</span>
                 </div>
                 <div className="text-xs font-extrabold text-text-main">{st.title}</div>
                 <div className="text-[10.5px] text-text-muted leading-relaxed">{st.d}</div>
@@ -3864,17 +4014,14 @@ console.log(session.dodo_checkout_url);
                 title: "Retrieval-Augmented Generation (RAG)",
                 desc: "Uses Neon's pgvector to semantically search uploaded invoices and bills.",
               },
-            ].map((feat) => (
+            ].map((feat, i) => (
               <div
-                key={feat.n}
+                key={i}
                 className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 shadow-sm flex items-start gap-4"
               >
-                <div className="shrink-0 space-y-2 items-center flex flex-col">
-                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500 text-white text-sm font-extrabold">
-                    {feat.n}
-                  </div>
-                  <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/15 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-amber-500 text-[18px]">{feat.icon}</span>
+                <div className="shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/15 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-amber-500 text-[20px]">{feat.icon}</span>
                   </div>
                 </div>
                 <div className="space-y-1.5">

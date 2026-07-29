@@ -3,8 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { DocsSidebar, DocCategory } from "@/components/ui/docs-sidebar";
 import { DocsContent } from "@/components/ui/docs-content";
+import { TracingBeam } from "@/components/ui/tracing-beam";
 import { DocsOutline, OutlineItem } from "@/components/ui/docs-outline";
+import { CommandPalette } from "@/components/ui/command-palette";
 import NotchNavbar from "@/components/ui/notch-navbar";
+import { useLenis } from "lenis/react";
 
 const CATEGORIES: DocCategory[] = [
   {
@@ -13,8 +16,8 @@ const CATEGORIES: DocCategory[] = [
       { id: "introduction", label: "Introduction" },
       { id: "quickstart", label: "Quick Start Guide" },
       { id: "connect-ai-agent-mcp", label: "Connect AI Agent (MCP)" },
-      { id: "authentication", label: "Authentication" },
       { id: "ai-developer-guide", label: "AI Developer Guide" },
+      { id: "authentication", label: "Authentication" },
       { id: "api-reference", label: "API Reference" },
     ],
   },
@@ -60,8 +63,8 @@ const OUTLINE_ITEMS: OutlineItem[] = [
   { id: "introduction", label: "Introduction" },
   { id: "quickstart", label: "Quick Start Guide" },
   { id: "connect-ai-agent-mcp", label: "Connect AI Agent (MCP)" },
-  { id: "authentication", label: "Authentication" },
   { id: "ai-developer-guide", label: "AI Developer Guide" },
+  { id: "authentication", label: "Authentication" },
   { id: "api-reference", label: "API Reference" },
   { id: "canonical-activity-model", label: "Canonical Activity Model" },
   { id: "confidence-scoring", label: "Confidence Scoring" },
@@ -80,6 +83,21 @@ export default function DocsPage() {
   const [activeSectionId, setActiveSectionId] = useState("introduction");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [copiedTextId, setCopiedTextId] = useState<string | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const lenis = useLenis();
+
+  // Add Ctrl+K / Cmd+K listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // Robust scrollspy implementation using relative viewport coordinates to handle short sections perfectly
   useEffect(() => {
@@ -127,21 +145,29 @@ export default function DocsPage() {
     setActiveSectionId(id);
     const el = document.getElementById(id);
     if (el) {
-      const offset = 90; // Header offset
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+      if (lenis) {
+        lenis.scrollTo(el, {
+          offset: -90,
+          duration: 1.2,
+          easing: (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        const offset = 90; // Header offset
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-background text-text-main flex flex-col font-sans">
+    <div className="min-h-screen bg-background text-text-main flex flex-col font-sans docs-page-container">
       {/* Notch Navbar */}
       <NotchNavbar />
 
@@ -155,6 +181,7 @@ export default function DocsPage() {
           onSelect={handleSelectSection}
           isOpen={isMobileSidebarOpen}
           onClose={() => setIsMobileSidebarOpen(false)}
+          onSearchClick={() => setIsSearchOpen(true)}
         />
 
         {/* Center / Right Content wrapper */}
@@ -175,11 +202,13 @@ export default function DocsPage() {
 
           {/* Core Content area */}
           <div className="px-6 sm:px-8 py-8 md:py-12 max-w-3xl w-full mx-auto">
-            <DocsContent
-              activeSectionId={activeSectionId}
-              onCopy={handleCopy}
-              copiedTextId={copiedTextId}
-            />
+            <TracingBeam>
+              <DocsContent
+                activeSectionId={activeSectionId}
+                onCopy={handleCopy}
+                copiedTextId={copiedTextId}
+              />
+            </TracingBeam>
           </div>
         </main>
 
@@ -190,6 +219,14 @@ export default function DocsPage() {
           onSelect={handleSelectSection}
         />
       </div>
+
+      {/* Cmd+K / Ctrl+K Command Palette search modal */}
+      <CommandPalette
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+        categories={CATEGORIES}
+        onSelect={handleSelectSection}
+      />
     </div>
   );
 }

@@ -39,7 +39,7 @@ export function DocsOutline({ items = [], activeId = "", onSelect }: DocsOutline
   if (items.length === 0) return null;
 
   return (
-    <aside className="hidden xl:block fixed top-24 bottom-0 right-8 w-60 py-4 px-4 overflow-y-auto z-10 select-none">
+    <aside className="hidden xl:block fixed top-24 bottom-0 right-8 w-60 py-4 px-4 overflow-y-auto z-10 select-none docs-outline">
       <div className="space-y-4">
         <h5 className="font-body-md text-[10px] font-bold text-neutral-400 dark:text-text-muted tracking-[0.16em] uppercase">
           On this page

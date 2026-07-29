@@ -1,0 +1,9 @@
+node_modules
+.next
+.vercel
+out
+build
+temp
+*.tsbuildinfo
+public/green-forest-moewalls-com.mp4
+*.mp4
