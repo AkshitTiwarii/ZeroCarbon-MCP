@@ -102,10 +102,10 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
              </div>
 
              {/* Content Layer */}
-             <div className="relative w-full h-full flex items-end justify-between pb-2 px-2 md:px-4">
+             <div className="relative w-full h-full flex items-center justify-between px-2 md:px-4">
                
                {/* Desktop Left Nav */}
-               <nav className="hidden md:flex gap-6 mb-1.5 shrink-0">
+               <nav className="hidden md:flex gap-6 shrink-0">
                 {items.left.map(item => (
                   <NavLink key={item.label} {...item} onClick={handleScroll} />
                 ))}
@@ -113,7 +113,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
 
               {/* Mobile Menu Button (Left) */}
               <button 
-                className="md:hidden mb-1 text-white hover:text-accent-green-text transition-colors flex items-center justify-center min-w-[44px] min-h-[44px]"
+                className="md:hidden text-white hover:text-accent-green-text transition-colors flex items-center justify-center min-w-[44px] min-h-[44px]"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
                 aria-expanded={isMobileMenuOpen}
@@ -122,7 +122,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
               </button>
 
               {/* Logo (Center) */}
-              <div className="flex justify-center shrink-0 mx-4 mt-1 mb-0.5">
+              <div className="flex justify-center shrink-0 mx-4">
                 <Link href="/" className="flex items-center gap-2 group">
                   {/* Clean SVG Leaf Logo */}
                   <svg className="w-5 h-5 text-accent-green hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="currentColor">
@@ -134,7 +134,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
               </div>
 
               {/* Desktop Right Nav */}
-              <nav className="hidden md:flex gap-6 items-center shrink-0 mb-0.5">
+              <nav className="hidden md:flex gap-6 items-center shrink-0">
                 {items.right.map(item => (
                   <NavLink key={item.label} {...item} onClick={handleScroll} />
                 ))}
@@ -159,7 +159,7 @@ export function NotchNavbar({ className, ...props }: React.HTMLAttributes<HTMLEl
               </nav>
 
               {/* Mobile Right Actions */}
-              <div className="md:hidden flex items-center gap-2 mb-1">
+              <div className="md:hidden flex items-center gap-2">
                 <AnimatedButton 
                   as={Link}
                   href="https://zerocarbon.org.in/request-demo"
